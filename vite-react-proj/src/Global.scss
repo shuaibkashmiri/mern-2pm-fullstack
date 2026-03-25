@@ -1,0 +1,24 @@
+* {
+  margin: 0%;
+  padding: 0%;
+}
+.main {
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  > ul {
+    width: 30%;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-around;
+
+    > li {
+      list-style: none;
+      margin-top: 5px;
+    }
+  }
+  > h3 {
+    font-size: 30px;
+  }
+}
