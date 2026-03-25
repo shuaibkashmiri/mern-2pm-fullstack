@@ -2,7 +2,8 @@
   margin: 0%;
   padding: 0%;
 }
-.main {
+
+.nav {
   background-color: black;
   color: white;
   display: flex;
@@ -21,4 +22,8 @@
   > h3 {
     font-size: 30px;
   }
+}
+
+.main {
+  min-height: 90vh;
 }

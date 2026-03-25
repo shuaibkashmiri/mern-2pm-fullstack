@@ -1,13 +1,16 @@
-import Home from "./Home";
-import "./Global.scss";
-import Navbar from "./Navbar";
+import Home from "./components/pages/Home";
+import "./styles/global.scss";
+import Navbar from "./components/sharedCompnents/Navbar";
+import Footer from "./components/sharedCompnents/Footer";
 
 const App = () => {
   return (
     <>
-      <Navbar />
+      <Navbar liItem="Services" />
       {/* <h1>Hello World!</h1> */}
       <Home />
+
+      <Footer />
     </>
   );
 };
