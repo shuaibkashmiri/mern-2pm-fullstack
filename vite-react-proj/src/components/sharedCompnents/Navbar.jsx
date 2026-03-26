@@ -4,10 +4,18 @@ const Navbar = (props) => {
       <div className="nav">
         <h3>Logo</h3>
         <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-          <li>{props.liItem}</li>
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <li>
+            <a href="/about">About</a>
+          </li>
+          <li>
+            <a href="/contact">Contact</a>
+          </li>
+          <li>
+            <a href={`${props.liItem}`}>{props.liItem}</a>
+          </li>
         </ul>
       </div>
     </>

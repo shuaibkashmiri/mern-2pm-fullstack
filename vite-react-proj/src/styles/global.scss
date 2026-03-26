@@ -1,6 +1,6 @@
 * {
   margin: 0%;
-  padding: 4%;
+  padding: 2%;
 }
 .red {
   color: red;
@@ -11,6 +11,7 @@
   color: white;
   display: flex;
   justify-content: space-between;
+  padding: 0% 4%;
   > ul {
     width: 30%;
     font-size: 20px;
@@ -20,6 +21,10 @@
     > li {
       list-style: none;
       margin-top: 5px;
+      > a {
+        text-decoration: none;
+        color: aliceblue;
+      }
     }
   }
   > h3 {
