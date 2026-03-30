@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Navbar = (props) => {
   return (
     <>
@@ -5,16 +7,16 @@ const Navbar = (props) => {
         <h3>Logo</h3>
         <ul>
           <li>
-            <a href="/">Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li>
-            <a href="/about">About</a>
+            <Link to="/about">About</Link>
           </li>
           <li>
-            <a href="/contact">Contact</a>
+            <Link to="/contact">Contact</Link>
           </li>
           <li>
-            <a href={`${props.liItem}`}>{props.liItem}</a>
+            <Link to={`${props.liItem}`}>{props.liItem}</Link>
           </li>
         </ul>
       </div>
