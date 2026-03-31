@@ -64,3 +64,20 @@
   flex-wrap: wrap;
   margin: 10px;
 }
+
+.search-box {
+  min-height: 30px;
+  font-size: 14px;
+  padding: 3px;
+}
+
+.search-btn {
+  background-image: linear-gradient(to right, #86307b, #e61875); /* */
+  color: white;
+  padding: 10px 35px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin: 4px;
+}

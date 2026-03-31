@@ -4,7 +4,7 @@ import axios from "axios";
 
 const Home = () => {
   const [photos, setPhotos] = useState([]);
-  const [query, setQuery] = useState("Kashmir");
+  const [query, setQuery] = useState("");
 
   const getData = async () => {
     try {
@@ -43,8 +43,11 @@ const Home = () => {
         type="text"
         placeholder="Search The Images"
         onChange={(e) => setQuery(e.target.value)}
+        className="search-box"
       />
-      <button onClick={getData}>Search</button>
+      <button className="search-btn" onClick={getData}>
+        Search
+      </button>
       <div className="box">
         {photos.map((photo) => (
           <Imagecard
