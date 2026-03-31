@@ -3,35 +3,60 @@ import Imagecard from "../sharedCompnents/Imagecard";
 import axios from "axios";
 
 const Home = () => {
-  const [users, setUsers] = useState([]);
+  const [photos, setPhotos] = useState([]);
+  const [query, setQuery] = useState("Kashmir");
 
   const getData = async () => {
     try {
-      const res = await axios.get("https://jsonplaceholder.typicode.com/users");
-      setUsers(res.data);
-      console.log(users);
+      const res = await axios.get(
+        `https://api.pexels.com/v1/search?query=${query}`,
+        {
+          headers: {
+            Authorization:
+              "AR6IwmyLUc6VPbxRqnJxtBmOpsQfzjpfaDqapwEIrsdJkj1Taf6DaZcw",
+          },
+        },
+      );
+      setPhotos(res.data.photos);
+      console.log(res.data.photos);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const viewChange = () => {
+    console.log(query);
+  };
+
   useEffect(() => {
-    getData();
+    viewChange();
     // console.log(getData());
-  }, []);
+  }, [query]);
 
   return (
     <div className="main">
       {/* {users.map((user) => (
 
       ))} */}
+
+      <input
+        type="text"
+        placeholder="Search The Images"
+        onChange={(e) => setQuery(e.target.value)}
+      />
+      <button onClick={getData}>Search</button>
       <div className="box">
-        {/* {users.map((user) => (
-          <Imagecard name={user.name} image={user.image} role={user.role} />
-        ))} */}
-        {users.map((user) => (
-          <p>{user.name}</p>
+        {photos.map((photo) => (
+          <Imagecard
+            name={photo.photographer}
+            image={photo.src.medium}
+            title={photo.alt}
+          />
         ))}
+        {/* {users.map((user) => (
+          <p>{user.name}</p>
+        ))} */}
+        {/* <Imagecard /> */}
       </div>
     </div>
   );
