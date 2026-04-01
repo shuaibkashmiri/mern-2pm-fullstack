@@ -3,8 +3,8 @@ import "./styles/global.scss";
 import Navbar from "./components/sharedCompnents/Navbar";
 import Footer from "./components/sharedCompnents/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import About from "./components/pages/About";
 import Contact from "./components/pages/Contact";
+import News from "./components/pages/News";
 
 const App = () => {
   return (
@@ -14,7 +14,7 @@ const App = () => {
         {/* <h1>Hello World!</h1> */}
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/news" element={<News />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
         <Footer />
