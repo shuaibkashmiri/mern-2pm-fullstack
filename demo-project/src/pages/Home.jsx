@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../components/sharedComponents/Card";
 import axios from "axios";
 
 const Home = () => {
   const [photos, setPhotos] = useState([]);
-  const [query, setQuery] = useState([]);
+  const [query, setQuery] = useState("Nature");
 
   const fetchPhotos = async () => {
     try {
@@ -23,6 +23,10 @@ const Home = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+      fetchPhotos();
+  }, [query]);
 
   return (
     <div className="main">
