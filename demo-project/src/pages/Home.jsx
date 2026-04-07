@@ -25,7 +25,11 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      if (query === "") return;
       fetchPhotos();
+    }, 1000);
+    return () => clearTimeout(timer);
   }, [query]);
 
   return (
