@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/sharedComponents/Card";
 import axios from "axios";
+import Search from "../components/Search";
+import Gallery from "./Gallery";
+
+import Com from "../components/Props/Com";
+import AppProvider from "../Context/AppContext";
 
 const Home = () => {
+  // const greet = "Hello World!";
   const [photos, setPhotos] = useState([]);
   const [query, setQuery] = useState("Nature");
 
@@ -25,37 +31,16 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (query === "") return;
-      fetchPhotos();
-    }, 1000);
-    return () => clearTimeout(timer);
+    fetchPhotos();
   }, [query]);
 
   return (
     <div className="main">
-      <div className="container">
-        <input
-          type="text"
-          className="custom-input"
-          placeholder="Enter your Search"
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <button class="btn-simple" onClick={fetchPhotos}>
-          Search
-        </button>
-      </div>
-
-      <div className="images">
-        {photos.map((photo, index) => (
-          <Card
-            key={index}
-            image={photo.src.medium}
-            desc={photo.alt}
-            photographer={photo.photographer}
-          />
-        ))}
-      </div>
+      {/* <Search setQuery={setQuery} />
+      <Gallery photos={photos} /> */}
+      <AppProvider>
+        <Com />
+      </AppProvider>
     </div>
   );
 };

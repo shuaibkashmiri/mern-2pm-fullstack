@@ -3,7 +3,6 @@ import React, { useState } from "react";
 const Contact = () => {
   const [formdata, setFormData] = useState({
     fullname: "",
-
   });
   const [errors, setErrors] = useState({});
   const handleChange = (e) => {
@@ -19,7 +18,7 @@ const Contact = () => {
     if (!formdata.fullname) {
       newErrors.fullname = "Fullname Required";
     }
-    
+
     return newErrors;
   };
 
@@ -32,7 +31,7 @@ const Contact = () => {
 
     console.log(formdata);
 
-    setFormData({ fullname:""});
+    setFormData({ fullname: "" });
   };
 
   return (
