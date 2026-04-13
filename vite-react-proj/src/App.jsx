@@ -5,6 +5,7 @@ import Footer from "./components/sharedCompnents/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Contact from "./components/pages/Contact";
 import News from "./components/pages/News";
+import { lazy } from "react";
 
 const App = () => {
   return (

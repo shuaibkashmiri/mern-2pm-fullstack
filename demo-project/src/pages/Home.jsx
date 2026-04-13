@@ -6,8 +6,10 @@ import Gallery from "./Gallery";
 
 import Com from "../components/Props/Com";
 import AppProvider from "../Context/AppContext";
+import { useCounter } from "../hooks/useCounter";
 
 const Home = () => {
+  const { count, increase, decrease } = useCounter();
   // const greet = "Hello World!";
   const [photos, setPhotos] = useState([]);
   const [query, setQuery] = useState("Nature");
@@ -36,11 +38,13 @@ const Home = () => {
 
   return (
     <div className="main">
+      <button onClick={increase}>Increase</button>
+      <h3>{count}</h3>
+      <button onClick={decrease}>Decrease</button>
       {/* <Search setQuery={setQuery} />
       <Gallery photos={photos} /> */}
-      <AppProvider>
-        <Com />
-      </AppProvider>
+
+      {/* <Com /> */}
     </div>
   );
 };

@@ -1,6 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../Context/AppContext";
+import { useGreet } from "../hooks/useGreet";
 
 const Contact = () => {
+  const greet = useGreet();
+
+  const { message } = useContext(AppContext);
+
   const [formdata, setFormData] = useState({
     fullname: "",
   });
@@ -37,6 +43,7 @@ const Contact = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        <h1>{greet}</h1>
         <input
           type="text"
           name="fullname"
