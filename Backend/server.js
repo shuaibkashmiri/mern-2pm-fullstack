@@ -1,11 +1,22 @@
 import express from "express";
 import { connectDb } from "./config/db.js";
+import {
+  createUser,
+  deleteUser,
+  getAllUsers,
+  getSingleUser,
+} from "./controllers/userController.js";
 
 const app = express();
 const PORT = 5000;
 
 // middleware
 app.use(express.json());
+
+app.post("/user/create", createUser);
+app.get("/users/all", getAllUsers);
+app.get("/user/:_id", getSingleUser);
+app.delete("/user/delete/:_id", deleteUser);
 
 app.listen(PORT, () => {
   console.log(`The Server Is Up And Running on port ${PORT}`);
@@ -32,7 +43,7 @@ connectDb();
 //   },
 // ];
 
-// // get request
+// get request
 // app.get("/users", (req, res) => {
 //   res.json({ users });
 // });
