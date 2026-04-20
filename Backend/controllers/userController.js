@@ -1,5 +1,8 @@
 import { User } from "../models/userModel.js";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+dotenv.config();
+import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
   try {
@@ -30,13 +33,26 @@ export const loginUser = async (req, res) => {
     if (!existingUser) {
       return res.status(404).json({ message: "User not found" });
     }
-    if (password != existingUser.password) {
-      return res.status(400).json({ message: "Invalid Password" });
+    const checkPassword = await bcrypt.compare(password, existingUser.password);
+
+    if (!checkPassword) {
+      return res.status(400).json({ message: "Incorrect Password" });
     }
 
+    const token = await jwt.sign({ _id: existingUser._id }, process.env.JWT_SECRET);
     return res
       .status(200)
-      .json({ message: "User Logged In Successfully ", existingUser });
+      .json({ message: "User Logged In Successfully ", token });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserDetail = async (req, res) => {
+  try {
+    const _id = req.user;
+    const user = await User.findById(_id).select("-password");
+    return res.status(200).json({ message: "User Fetched", user });
   } catch (error) {
     console.log(error);
   }
