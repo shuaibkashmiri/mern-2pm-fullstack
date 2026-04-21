@@ -7,6 +7,7 @@ import {
   registerUser,
 } from "./controllers/usercontroller.js";
 import { isAuthenticated } from "./middlewares/auth.js";
+import authRoutes from "./routes/authRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -14,12 +15,7 @@ const app = express();
 app.use(express.json());
 
 // routes
-app.post("/user/signup", registerUser);
-app.post("/user/login", loginUser);
-app.get("/user/details", isAuthenticated, getUserDetail);
-app.get("/simple/console", isAuthenticated, (req, res) => {
-  res.json({ message: "This is Protected route" });
-});
+app.use("/api/v1/user", authRoutes);
 
 const port = process.env.PORT;
 app.listen(port, () => {
