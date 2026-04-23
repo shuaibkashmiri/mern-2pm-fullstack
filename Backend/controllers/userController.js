@@ -8,13 +8,11 @@ export const registerUser = async (req, res) => {
   try {
     const { email, fullname, password } = req.body;
     if (!email || !fullname || !password) {
-      return res.status(400).json({ message: "All Credentials Required" });
+      return res.json({ message: "All Credentials Required" });
     }
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res
-        .status(400)
-        .json({ message: "User Already Registered! Login Instead" });
+      return res.json({ message: "User Already Registered! Login Instead" });
     }
 
     const encryptPassword = await bcrypt.hash(password, 10);
@@ -31,12 +29,12 @@ export const loginUser = async (req, res) => {
     const { email, password } = req.body;
     const existingUser = await User.findOne({ email });
     if (!existingUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res.json({ message: "User not found" });
     }
     const checkPassword = await bcrypt.compare(password, existingUser.password);
 
     if (!checkPassword) {
-      return res.status(400).json({ message: "Incorrect Password" });
+      return res.json({ message: "Incorrect Password" });
     }
 
     const token = await jwt.sign(
@@ -45,7 +43,7 @@ export const loginUser = async (req, res) => {
     );
     return res
       .status(200)
-      .json({ message: "User Logged In Successfully ", token });
+      .json({ message: "User Logged In Successfully", token });
   } catch (error) {
     console.log(error);
   }

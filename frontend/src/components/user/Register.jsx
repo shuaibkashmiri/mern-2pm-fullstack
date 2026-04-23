@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 const Register = () => {
   const [formdata, setFormData] = useState({
     fullname: "",
@@ -21,6 +23,11 @@ const Register = () => {
         "http://localhost:5000/api/v1/user/register",
         formdata,
       );
+      if (res.data.message == "User Created Successfully !") {
+        toast.success(res.data.message);
+      } else {
+        toast.error(res.data.message);
+      }
       console.log(res.data);
 
       setFormData({ fullname: "", email: "", password: "" });
@@ -32,6 +39,7 @@ const Register = () => {
     <>
       <div className="main-reg">
         <form onSubmit={handleSubmit}>
+          <h2 className="text-center mb-4">Register With Us</h2>
           {/* Fullname */}
           <div data-mdb-input-init className="form-outline mb-4">
             <input
@@ -87,9 +95,9 @@ const Register = () => {
           {/* Register buttons */}
           <div className="text-center">
             <p>
-              Not a member? <a href="#!">Register</a>
+              Already a member? <Link to="/login">Login</Link>
             </p>
-            <p>or sign up with:</p>
+
             <button
               type="button"
               data-mdb-button-init
