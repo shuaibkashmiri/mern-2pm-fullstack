@@ -9,6 +9,7 @@ import {
 } from "./controllers/usercontroller.js";
 import { isAuthenticated } from "./middlewares/auth.js";
 import authRoutes from "./routes/authRoutes.js";
+import blogRoutes from "./routes/blogRoutes.js";
 dotenv.config();
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(cors());
 
 // routes
+app.use("/api/v1/blog", blogRoutes);
 app.use("/api/v1/user", authRoutes);
 
 const port = process.env.PORT;
