@@ -1,8 +1,11 @@
 import cloudinary from "../config/cloudinary.js";
 import { Blog } from "../models/blogModal.js";
+import path from "path";
 
 export const createBlog = async (req, res) => {
   try {
+    const userid = req.user;
+    console.log(userid);
     const { title, content } = req.body;
     const filePath = req.file.path;
     if (!title || !content) {
@@ -15,7 +18,12 @@ export const createBlog = async (req, res) => {
     const result = await cloudinary.uploader.upload(filePath);
     const imageUrl = result.secure_url;
 
-    const newBlog = await Blog.create({ title, content, image: imageUrl });
+    const newBlog = await Blog.create({
+      title,
+      content,
+      image: imageUrl,
+      author: userid,
+    });
 
     if (!newBlog) {
       return res.json({ message: "Something went Wrong" });
@@ -23,6 +31,31 @@ export const createBlog = async (req, res) => {
     return res
       .status(201)
       .json({ message: "Blog Posted Successfully", newBlog });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAllblogs = async (req, res) => {
+  try {
+    const blogs = await Blog.find();
+    if (!blogs) {
+      return res.json({ message: "No Blogs" });
+    }
+    return res.json({ blogs });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const myBlogs = async (req, res) => {
+  try {
+    const userId = req.user;
+    const blogs = await Blog.find({ author: userId });
+    if (!blogs) {
+      return res.json({ message: "You Have Not posted a blog yet" });
+    }
+    return res.json(blogs);
   } catch (error) {
     console.log(error);
   }

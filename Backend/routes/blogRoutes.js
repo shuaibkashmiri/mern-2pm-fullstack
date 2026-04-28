@@ -1,8 +1,14 @@
 import express from "express";
-import { createBlog } from "../controllers/blogController.js";
+import {
+  createBlog,
+  getAllblogs,
+  myBlogs,
+} from "../controllers/blogController.js";
 import upload from "../middlewares/upload.js";
+import { isAuthenticated } from "../middlewares/auth.js";
 const router = express.Router();
 
-router.post("/create", upload.single("image"), createBlog);
-
+router.post("/create", isAuthenticated, upload.single("image"), createBlog);
+router.get("/all", getAllblogs);
+router.get("/my", isAuthenticated, myBlogs);
 export default router;

@@ -5,6 +5,9 @@ dotenv.config();
 export const isAuthenticated = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(400).json({ message: "Login to Access" });
+    }
     const token = authHeader.split(" ")[1];
 
     if (!token) {

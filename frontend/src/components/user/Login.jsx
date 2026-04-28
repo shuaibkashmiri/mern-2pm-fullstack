@@ -24,6 +24,7 @@ const Login = () => {
 
       if (res.data.message == "User Logged In Successfully") {
         toast.success(res.data.message);
+        localStorage.setItem("token", res.data.token);
       } else {
         toast.error(res.data.message);
       }
