@@ -38,7 +38,7 @@ export const createBlog = async (req, res) => {
 
 export const getAllblogs = async (req, res) => {
   try {
-    const blogs = await Blog.find();
+    const blogs = await Blog.find().populate("author");
     if (!blogs) {
       return res.json({ message: "No Blogs" });
     }
@@ -56,6 +56,20 @@ export const myBlogs = async (req, res) => {
       return res.json({ message: "You Have Not posted a blog yet" });
     }
     return res.json(blogs);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getSingleBlog = async (req, res) => {
+  try {
+    const { _id } = req.params;
+const blog =await Blog.findById(_id)
+if(!blog){
+  return res.json({message:"blog not found"})
+}
+return res.json({message:"Blog fetched",blog})
+
   } catch (error) {
     console.log(error);
   }
