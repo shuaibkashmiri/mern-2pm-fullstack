@@ -64,12 +64,30 @@ export const myBlogs = async (req, res) => {
 export const getSingleBlog = async (req, res) => {
   try {
     const { _id } = req.params;
-const blog =await Blog.findById(_id)
-if(!blog){
-  return res.json({message:"blog not found"})
-}
-return res.json({message:"Blog fetched",blog})
+    const blog = await Blog.findById(_id);
+    if (!blog) {
+      return res.json({ message: "blog not found" });
+    }
+    return res.json({ message: "Blog fetched", blog });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
+export const toggleLike = async (req, res) => {
+  try {
+    const { blogId } = req.params;
+    const userId = req.user;
+    const blog = await Blog.findById(blogId);
+    if (blog.likes.includes(userId)) {
+      blog.likes = blog.likes.filter((id) => {
+        id.toString() !== userId.toString();
+      });
+    } else {
+      blog.likes.push(userId);
+    }
+    await blog.save();
+    return res.json({ message: "blog likes updated" });
   } catch (error) {
     console.log(error);
   }
