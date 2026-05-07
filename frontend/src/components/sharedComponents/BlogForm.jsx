@@ -6,6 +6,7 @@ const BlogForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,16 +15,17 @@ const BlogForm = () => {
     formData.append("content", content);
     formData.append("image", image);
     try {
+      setLoading(true);
       const token = localStorage.getItem("token");
       console.log(token);
       const res = await axios.post(
         "http://localhost:5000/api/v1/blog/create",
         formData,
         {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${token}`,
-            },
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
         },
       );
 
@@ -34,7 +36,10 @@ const BlogForm = () => {
       }
       console.log(res.data);
     } catch (error) {
+      setLoading(false);
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,7 +85,7 @@ const BlogForm = () => {
           />
         </div>
 
-        <button type="submit">Post</button>
+        <button type="submit">{loading ? "Posting...." : "Post"}</button>
       </form>
     </>
   );

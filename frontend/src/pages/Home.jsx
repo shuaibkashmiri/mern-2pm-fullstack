@@ -1,12 +1,19 @@
-import React, { useEffect } from "react";
-import BlogForm from "../components/sharedComponents/BlogForm";
+import React, { useEffect, useState } from "react";
+
 import axios from "axios";
+import BlogCard from "../components/sharedComponents/BlogCard";
+import Authorized from "../auth/Authorized";
 
 const Home = () => {
+  Authorized();
+  const [blogs, setBlogs] = useState([]);
+
   const fetchBlogs = async () => {
     try {
       const resp = await axios.get("http://localhost:5000/api/v1/blog/all");
-      console.log(resp.data);
+
+      setBlogs(resp.data.blogs);
+      console.log(blogs);
     } catch (error) {
       console.log(error);
     }
@@ -18,7 +25,21 @@ const Home = () => {
 
   return (
     <>
-      <BlogForm />
+      <div className="home-container">
+        <h1>Latest Blogs</h1>
+        <div className="blog-cards-grid">
+          {blogs.map((blog, index) => (
+            <BlogCard
+              key={index}
+              title={blog.title}
+              content={blog.content}
+              image={blog.image}
+              author={blog.author?.fullname}
+              _id={blog._id}
+            />
+          ))}
+        </div>
+      </div>
     </>
   );
 };

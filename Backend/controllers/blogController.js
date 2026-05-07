@@ -64,11 +64,14 @@ export const myBlogs = async (req, res) => {
 export const getSingleBlog = async (req, res) => {
   try {
     const { _id } = req.params;
-    const blog = await Blog.findById(_id);
+    const blog = await Blog.findById(_id)
+      .populate("author")
+      .populate("comments.user", "-password");
+
     if (!blog) {
-      return res.json({ message: "blog not found" });
+      return res.json({ message: "Blog Not Found" });
     }
-    return res.json({ message: "Blog fetched", blog });
+    return res.json({ message: "Blog Fetched", blog });
   } catch (error) {
     console.log(error);
   }
@@ -88,6 +91,27 @@ export const toggleLike = async (req, res) => {
     }
     await blog.save();
     return res.json({ message: "blog likes updated" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const writeComment = async (req, res) => {
+  try {
+    const { blogId } = req.params;
+    const userId = req.user;
+    const { text } = req.body;
+    if (!text) {
+      return res.json({ message: "Comment content required" });
+    }
+
+    const blog = await Blog.findById(blogId);
+
+    console.log(blog);
+
+    blog.comments.push({ text, user: userId });
+    await blog.save();
+    return res.json({ message: "Comment Added" });
   } catch (error) {
     console.log(error);
   }

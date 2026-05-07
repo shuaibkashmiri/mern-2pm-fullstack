@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const token = localStorage.getItem("token");
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -24,19 +25,29 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="#">
+                <Link to={"/"} className="nav-link active" aria-current="page">
                   Home
                 </Link>
               </li>
             </ul>
             <form className="d-flex" role="search">
-              <Link
-                to={"/register"}
-                className="btn btn-outline-success"
-                type="submit"
-              >
-                Register
-              </Link>
+              {token ? (
+                <Link
+                  to={"/user/dashboard"}
+                  className="btn btn-outline-success"
+                  type="submit"
+                >
+                  Dashboard
+                </Link>
+              ) : (
+                <Link
+                  to={"/login"}
+                  className="btn btn-outline-success"
+                  type="submit"
+                >
+                  Login
+                </Link>
+              )}
             </form>
           </div>
         </div>

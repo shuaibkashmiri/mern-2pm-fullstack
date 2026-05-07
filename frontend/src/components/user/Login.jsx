@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -8,6 +8,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,6 +26,7 @@ const Login = () => {
       if (res.data.message == "User Logged In Successfully") {
         toast.success(res.data.message);
         localStorage.setItem("token", res.data.token);
+        navigate("/user/dashboard");
       } else {
         toast.error(res.data.message);
       }
