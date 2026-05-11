@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "./FullBlog.css";
+import { toast } from "react-toastify";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+
 const FullBlog = () => {
   const { _id } = useParams();
   const [blog, setBlog] = useState({});
@@ -13,14 +16,23 @@ const FullBlog = () => {
 
   const getBlog = async () => {
     try {
-      const resp = await axios.get(`http://localhost:5000/api/v1/blog/${_id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const resp = await axios.get(
+        `${import.meta.env.VITE_API_URL}/blog/${_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
       setBlog(resp.data.blog);
       setLikeCount(resp.data.blog.likes.length);
       setComments(resp.data.blog.comments);
+      const userId = localStorage.getItem("userId");
+      if (resp.data.blog.likes.includes(userId)) {
+        setLiked(true);
+      } else {
+        setLiked(false);
+      }
 
       console.log(comments);
     } catch (error) {
@@ -31,15 +43,15 @@ const FullBlog = () => {
   const handleLike = async () => {
     try {
       const resp = await axios.put(
-        `http://localhost:5000/api/v1/blog/like/${_id}`,
+        `${import.meta.env.VITE_API_URL}/blog/like/${_id}`,
         {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         },
-        setLiked(!liked),
       );
+      getBlog();
       console.log(resp.data);
     } catch (error) {
       console.log(error);
@@ -50,7 +62,7 @@ const FullBlog = () => {
     e.preventDefault();
     try {
       const resp = await axios.put(
-        `http://localhost:5000/api/v1/blog/comment/${_id}`,
+        `${import.meta.env.VITE_API_URL}/blog/comment/${_id}`,
         { text },
         {
           headers: {
@@ -58,6 +70,8 @@ const FullBlog = () => {
           },
         },
       );
+      toast.success("Comment Posted");
+      getBlog();
     } catch (error) {
       console.log(error);
     }
@@ -73,13 +87,24 @@ const FullBlog = () => {
         <img className="blog-image" src={blog.image} alt="" />
         <p className="blog-content">{blog.content}</p>
 
-        <button
+        {/* <button
           className={liked ? "btn btn-success" : "btn btn-secondary "}
           onClick={handleLike}
         >
           {liked ? "Liked" : "Like"}
-        </button>
-        <span>{likeCount}</span>
+        </button> */}
+
+        {liked ? (
+          <FaHeart
+            size={"30"}
+            color="red"
+            onClick={handleLike}
+            cursor={"pointer"}
+          />
+        ) : (
+          <FaRegHeart size={"30"} onClick={handleLike} cursor={"pointer"} />
+        )}
+        <span>{`  ${likeCount} Likes`}</span>
         <div className="container">
           <div className="card mt-4">
             <div className="card-header bg-white">Add a Comment</div>
@@ -108,7 +133,7 @@ const FullBlog = () => {
                 <div className="card-body">
                   <div className="d-flex">
                     <div>
-                      <h6 className="card-title mb-1">
+                      <h6 className="card-title text-primary mb-1">
                         {comment.user.fullname}
                       </h6>
 
@@ -119,6 +144,8 @@ const FullBlog = () => {
               </div>
             ))}
         </div>
+
+        <FaHeart color="red" />
       </div>
     </>
   );

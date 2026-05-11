@@ -248,3 +248,14 @@
   display: flex;
   gap: 20px;
 }
+
+.pnf {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  > .btn {
+    max-width: 300px;
+  }
+}

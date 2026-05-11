@@ -20,7 +20,7 @@ const Register = () => {
     console.log(formdata);
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/v1/user/register",
+        `${import.meta.env.VITE_API_URL}/user/register`,
         formdata,
       );
       if (res.data.message == "User Created Successfully !") {

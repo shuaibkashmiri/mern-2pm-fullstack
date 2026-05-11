@@ -12,7 +12,7 @@ const Dashboard = () => {
   const myBlogs = async () => {
     const token = localStorage.getItem("token");
     try {
-      const resp = await axios.get("http://localhost:5000/api/v1/blog/my", {
+      const resp = await axios.get(`${import.meta.env.VITE_API_URL}/blog/my`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -13,7 +13,7 @@ const Authorized = () => {
   const checkAuth = async () => {
     try {
       const resp = await axios.get(
-        "http://localhost:5000/api/v1/user/cl-auth",
+        `${import.meta.env.VITE_API_URL}/user/cl-auth`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
