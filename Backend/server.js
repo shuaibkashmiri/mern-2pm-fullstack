@@ -7,7 +7,7 @@ import {
   getUserDetail,
   loginUser,
   registerUser,
-} from "./controllers/usercontroller.js";
+} from "./controllers/userController.js";
 import { isAuthenticated } from "./middlewares/auth.js";
 import authRoutes from "./routes/authRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
