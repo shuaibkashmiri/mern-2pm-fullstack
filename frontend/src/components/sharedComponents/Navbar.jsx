@@ -1,9 +1,16 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
+  const location = useLocation();
+  const [email, setEmail] = useState(localStorage.getItem("email"));
   const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    setEmail(localStorage.getItem("email"));
+  }, [location]);
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -30,15 +37,20 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
-            <form className="d-flex" role="search">
+            <form className="d-flex align-items-center" role="search">
               {token ? (
-                <Link
-                  to={"/user/dashboard"}
-                  className="btn btn-outline-success"
-                  type="submit"
-                >
-                  Dashboard
-                </Link>
+                <>
+                  <span className="navbar-text me-3">
+                    {email ? `Logged in as ${email}` : "Logged in"}
+                  </span>
+                  <Link
+                    to={"/user/dashboard"}
+                    className="btn btn-outline-success"
+                    type="submit"
+                  >
+                    Dashboard
+                  </Link>
+                </>
               ) : (
                 <Link
                   to={"/login"}
